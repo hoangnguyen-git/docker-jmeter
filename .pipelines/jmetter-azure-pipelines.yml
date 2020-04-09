@@ -1,0 +1,22 @@
+variables:
+  host: cdpartsun2-dev.azurewebsites.net
+
+jobs:
+- job: jmeter
+  pool:
+    vmImage: Ubuntu-18.04
+  displayName: Run JMeter tests
+  steps:
+  - task: Bash@3
+    displayName: Execute JMeter tests
+    inputs:
+      targetType: filePath
+      filePath: 'test.sh'
+      arguments: 
+      workingDirectory: 
+      failOnStderr: true
+  - task: PublishPipelineArtifact@1
+    displayName: Publish JMeter Report
+    inputs:
+      targetPath: tests/trivial/report
+      artifact: report
